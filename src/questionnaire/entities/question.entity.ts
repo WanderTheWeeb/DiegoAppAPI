@@ -15,6 +15,6 @@ export class Question {
     @ManyToOne(() => Questionnaire, (questionnaire) => questionnaire.questions)
     questionnaire: Questionnaire;
     @ManyToMany(() => Answer)
-    @JoinTable()
+    @JoinTable({ name: 'question_answers' })
     answers: Answer[];
 }
