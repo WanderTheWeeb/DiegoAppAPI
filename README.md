@@ -22,4 +22,6 @@ Mysql como BD
 Jest para testing
 
 1. Crear un archivo .env
-2. Copiar los datos de .env.example
+2. Copiar los datos de .env.example al .env
+3. Crear una base de datos con el mismo nombre que pusiste en tu .env
+4. Ejecutar el comando `npm run dev:start`
