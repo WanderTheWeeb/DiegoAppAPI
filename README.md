@@ -4,7 +4,7 @@
 
 El proyecto es una plataforma web para la creación y gestión de cuestionarios, similar a Google Forms. Permite a los usuarios diseñar formularios con preguntas abiertas y cerradas, administrar respuestas y evaluar resultados con reglas específicas.
 
->[!NOTE]APIDOG
+>[!NOTE]
 La documentación fue realizada con [ApiDog](https://www.apidog.com/apidoc/shared-6467f32f-c0e5-42b8-9cc6-7c383e4ab86e/doc-831627)
 
 ### Características Principales
