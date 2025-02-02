@@ -1,12 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UseFilters } from '@nestjs/common';
 import { CreateQuestionnaireDto } from './dto/create-questionnaire.dto';
 import { UpdateQuestionnaireDto } from './dto/update-questionnaire.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Questionnaire } from './entities/questionnaire.entity';
 import { Repository } from 'typeorm/repository/Repository';
 import { UpdateResult } from 'typeorm';
+import { HttpExceptionFilter } from 'src/errors/http-exception.filter';
 
 @Injectable()
+@UseFilters(new HttpExceptionFilter())
 export class QuestionnaireService {
 
   constructor(
