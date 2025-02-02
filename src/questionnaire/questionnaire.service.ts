@@ -4,6 +4,7 @@ import { UpdateQuestionnaireDto } from './dto/update-questionnaire.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Questionnaire } from './entities/questionnaire.entity';
 import { Repository } from 'typeorm/repository/Repository';
+import { UpdateResult } from 'typeorm';
 
 @Injectable()
 export class QuestionnaireService {
@@ -13,9 +14,13 @@ export class QuestionnaireService {
     private questionnaireRepository: Repository<Questionnaire>,
   ) { }
 
-  create(createQuestionnaireDto: CreateQuestionnaireDto) {
-    // TODO: Implement this method
-    return 'This action adds a new questionnaire';
+  create(createQuestionnaireDto: CreateQuestionnaireDto): Promise<Questionnaire> {
+    const questionnaire = this.questionnaireRepository.create({
+      ...createQuestionnaireDto,
+      creationDate: new Date(),
+    });
+
+    return this.questionnaireRepository.save(questionnaire);
   }
 
   findAll(): Promise<Questionnaire[]> {
@@ -26,9 +31,8 @@ export class QuestionnaireService {
     return this.questionnaireRepository.findOneBy({ id });
   }
 
-  update(id: number, updateQuestionnaireDto: UpdateQuestionnaireDto) {
-    // TODO: Implement this method
-    return `This action updates a #${id} questionnaire`;
+  update(id: number, updateQuestionnaireDto: UpdateQuestionnaireDto): Promise<UpdateResult> {
+    return this.questionnaireRepository.update(id, updateQuestionnaireDto);
   }
 
   async remove(id: number): Promise<void> {

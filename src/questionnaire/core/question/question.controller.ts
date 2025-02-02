@@ -1,13 +1,15 @@
-import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { QuestionService } from './question.service';
+import { CreateQuestionDto } from 'src/questionnaire/dto/create-question.dto';
+import { UpdateQuestionDto } from 'src/questionnaire/dto/update-question.dto';
 
 @Controller('question')
 export class QuestionController {
-    constructor(private readonly questionService: QuestionService,) {}
+    constructor(private readonly questionService: QuestionService) { }
 
     @Post()
-    create() {
-        // TODO: create a new question
+    create(@Body() createQuestionDto: CreateQuestionDto) {
+        return this.questionService.create(createQuestionDto);
     }
 
     @Get()
@@ -21,13 +23,13 @@ export class QuestionController {
     }
 
     @Put(':id')
-    update() {
-        // TODO: update a question
+    update(@Body() updateQuestion: UpdateQuestionDto, @Param('id') id: string) {
+        return this.questionService.update(+id, updateQuestion);
     }
 
     @Delete(':id')
     remove(@Param('id') id: string) {
         return this.questionService.remove(+id);
     }
-    
+
 }

@@ -10,5 +10,4 @@ export class Answer {
     description: string;
     @Column()
     creationDate: Date;
-    
 }
