@@ -26,11 +26,17 @@ export class QuestionnaireService {
   }
 
   findAll(): Promise<Questionnaire[]> {
-    return this.questionnaireRepository.find();
+    return this.questionnaireRepository.find({
+      relations: ['questions', 'questions.answers'],
+    });
   }
 
   findOne(id: number): Promise<Questionnaire | null> {
-    return this.questionnaireRepository.findOneBy({ id });
+    return this.questionnaireRepository.findOne({
+      where: { id },
+      relations: ['questions', 'questions.answers'],
+
+    });
   }
 
   update(id: number, updateQuestionnaireDto: UpdateQuestionnaireDto): Promise<UpdateResult> {

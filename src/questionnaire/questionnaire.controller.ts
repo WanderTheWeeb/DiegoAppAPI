@@ -5,7 +5,7 @@ import { QuestionnaireService } from './questionnaire.service';
 
 @Controller('questionnaire')
 export class QuestionnaireController {
-  constructor(private readonly questionnaireService: QuestionnaireService) {}
+  constructor(private readonly questionnaireService: QuestionnaireService) { }
 
   @Post()
   create(@Body() createQuestionnaireDto: CreateQuestionnaireDto) {
