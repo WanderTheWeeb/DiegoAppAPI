@@ -1,15 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UseFilters } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { HttpExceptionFilter } from 'src/errors/http-exception.filter';
+import { CreateQuestionDto } from 'src/questionnaire/dto/create-question.dto';
+import { UpdateQuestionDto } from 'src/questionnaire/dto/update-question.dto';
 import { Question } from 'src/questionnaire/entities/question.entity';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 
 @Injectable()
+@UseFilters(new HttpExceptionFilter())
 export class QuestionService {
     constructor(@InjectRepository(Question) private questionRepository: Repository<Question>) { }
 
-    create(createQuestionDto: any) {
-        // TODO: create a new question
-     }
+    create(createQuestionDto: CreateQuestionDto): Promise<Question> {
+        return this.questionRepository.save(createQuestionDto);
+    }
 
     findAll(): Promise<Question[]> {
         return this.questionRepository.find();
@@ -19,9 +23,9 @@ export class QuestionService {
         return this.questionRepository.findOneBy({ id });
     }
 
-    update(id: number, updateQuestionDto: any) {
-        // TODO: update a question
-     }
+    update(id: number, updateQuestionDto: UpdateQuestionDto): Promise<UpdateResult> {
+        return this.questionRepository.update(id, updateQuestionDto);
+    }
 
     async remove(id: number): Promise<void> {
         await this.questionRepository.delete(id);

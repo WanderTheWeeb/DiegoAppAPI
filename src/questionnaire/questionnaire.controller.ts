@@ -1,11 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { CreateQuestionnaireDto } from './dto/create-questionnaire.dto';
 import { UpdateQuestionnaireDto } from './dto/update-questionnaire.dto';
 import { QuestionnaireService } from './questionnaire.service';
 
 @Controller('questionnaire')
 export class QuestionnaireController {
-  constructor(private readonly questionnaireService: QuestionnaireService) {}
+  constructor(private readonly questionnaireService: QuestionnaireService) { }
 
   @Post()
   create(@Body() createQuestionnaireDto: CreateQuestionnaireDto) {
@@ -22,7 +22,7 @@ export class QuestionnaireController {
     return this.questionnaireService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateQuestionnaireDto: UpdateQuestionnaireDto) {
     return this.questionnaireService.update(+id, updateQuestionnaireDto);
   }
