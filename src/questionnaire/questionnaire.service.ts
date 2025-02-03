@@ -17,12 +17,7 @@ export class QuestionnaireService {
   ) { }
 
   create(createQuestionnaireDto: CreateQuestionnaireDto): Promise<Questionnaire> {
-    const questionnaire = this.questionnaireRepository.create({
-      ...createQuestionnaireDto,
-      creationDate: new Date(),
-    });
-
-    return this.questionnaireRepository.save(questionnaire);
+       return this.questionnaireRepository.save(createQuestionnaireDto);
   }
 
   findAll(): Promise<Questionnaire[]> {

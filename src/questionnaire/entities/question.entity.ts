@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Questionnaire } from "./questionnaire.entity";
 import { Answer } from "./answer.entity";
 
@@ -10,11 +10,11 @@ export class Question {
     name: string;
     @Column()
     description: string;
-    @Column()
+    @CreateDateColumn()
     creationDate: Date;
     @ManyToOne(() => Questionnaire, (questionnaire) => questionnaire.questions)
     questionnaire: Questionnaire;
-    @ManyToMany(() => Answer)
+    @ManyToMany(() => Answer, { cascade: true })
     @JoinTable({ name: 'question_answers' })
     answers: Answer[];
 }
