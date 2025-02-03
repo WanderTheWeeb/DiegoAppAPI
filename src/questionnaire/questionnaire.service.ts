@@ -6,6 +6,7 @@ import { Questionnaire } from './entities/questionnaire.entity';
 import { Repository } from 'typeorm/repository/Repository';
 import { UpdateResult } from 'typeorm';
 import { HttpExceptionFilter } from 'src/errors/http-exception.filter';
+import { PaginationDto } from 'src/interfaces/pagination.dto';
 
 @Injectable()
 @UseFilters(new HttpExceptionFilter())
@@ -17,12 +18,14 @@ export class QuestionnaireService {
   ) { }
 
   create(createQuestionnaireDto: CreateQuestionnaireDto): Promise<Questionnaire> {
-       return this.questionnaireRepository.save(createQuestionnaireDto);
+    return this.questionnaireRepository.save(createQuestionnaireDto);
   }
 
-  findAll(): Promise<Questionnaire[]> {
+  findAll(pagination: PaginationDto): Promise<Questionnaire[]> {
     return this.questionnaireRepository.find({
       relations: ['questions', 'questions.answers'],
+      skip: pagination.page as number,
+      take: pagination.limit as number,
     });
   }
 
