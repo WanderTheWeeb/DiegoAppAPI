@@ -1,12 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, Query, HttpStatus, UseFilters } from '@nestjs/common';
 import { CreateQuestionnaireDto } from './dto/create-questionnaire.dto';
 import { UpdateQuestionnaireDto } from './dto/update-questionnaire.dto';
 import { QuestionnaireService } from './questionnaire.service';
 import { PaginationDto } from 'src/interfaces/pagination.dto';
 import { ResponseResult } from 'src/interfaces/result.dto';
 import { Questionnaire } from './entities/questionnaire.entity';
+import { HttpExceptionFilter } from 'src/errors/http-exception.filter';
 
 @Controller('questionnaire')
+@UseFilters(new HttpExceptionFilter())
 export class QuestionnaireController {
   constructor(private readonly questionnaireService: QuestionnaireService) { }
 
@@ -22,13 +24,19 @@ export class QuestionnaireController {
     return {
       data,
       message: 'All questionnaires',
-      statusCode: 200,
+      statusCode: HttpStatus.OK,
     };
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.questionnaireService.findOne(+id);
+  async findOne(@Param('id') id: string): Promise<ResponseResult<Questionnaire | null>> {
+    const questionnaire = this.questionnaireService.findOne(+id);
+    const data = await questionnaire;
+    return {
+      data,
+      message: 'Questionnaire',
+      statusCode: HttpStatus.OK,
+    };
   }
 
   @Put(':id')

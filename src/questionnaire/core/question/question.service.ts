@@ -15,8 +15,8 @@ export class QuestionService {
         return this.questionRepository.save(createQuestionDto);
     }
 
-    findAll(): Promise<Question[]> {
-        return this.questionRepository.find();
+    findAll(id: number): Promise<Question[]> {
+        return this.questionRepository.find({ where: { questionnaire: { id } } });
     }
 
     findOne(id: number): Promise<Question | null> {
